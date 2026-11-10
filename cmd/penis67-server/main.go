@@ -28,6 +28,7 @@ func main() {
 		uuids  = flag.String("uuid", "", "user UUIDs, comma separated (repeat with commas)")
 		priv   = flag.String("priv", "", "base64url X25519 static private key (generate with -gen)")
 		decoy  = flag.String("decoy", "www.bing.com:443", "decoy site relayed to unauthorized clients")
+		quic   = flag.String("quic", "", "QUIC carrier UDP listen address (e.g. :443); empty = off")
 		gen    = flag.Bool("gen", false, "generate keys, print a sample link, exit")
 		host   = flag.String("host", "", "sample host:port for the -gen link")
 	)
@@ -66,6 +67,7 @@ func main() {
 		Users:     users,
 		StaticKey: staticPriv,
 		Decoy:     *decoy,
+		QuicAddr:  *quic,
 		Log:       logLine,
 	})
 	if err != nil {
@@ -94,6 +96,9 @@ func main() {
 		Name:        "penis67",
 	}
 	fmt.Println("penis67-server listening on", server.Addr().String(), "decoy", *decoy)
+	if addr := server.QUICAddr(); addr != nil {
+		fmt.Println("quic carrier on", addr.String())
+	}
 	fmt.Println("sample link:", link.Build())
 	if err := server.Serve(); err != nil {
 		fmt.Fprintln(os.Stderr, "p67:", err)
