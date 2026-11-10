@@ -2,5 +2,5 @@ build/
 *.zip
 *.so
 *.h
-penis67-server
-penis67-plugin-desktop
+/penis67-server
+/penis67-plugin-desktop
