@@ -1,0 +1,47 @@
+{
+  "apiVersion": 1,
+  "schemes": [
+    "penis67"
+  ],
+  "name": "Penis67",
+  "description": "REALITY-класс стелс-протокол: маркер в legacy_session_id + собственный X25519 key_share, decoy-relay (чужим — настоящий сайт), uTLS-отпечатки, per-connection серты, TCP и QUIC/H3 носители, мукс TCP+UDP.",
+  "homepage": "https://github.com/MeowxdNet/penis67",
+  "updateUrl": "",
+  "version": "1.0.0",
+  "license": "MIT",
+  "handoverMode": "restart",
+  "parallelPing": false,
+  "socks5": true,
+  "socks5Udp": true,
+  "dnsResolver": true,
+  "pingTimeoutSec": 20,
+  "settings": [
+    {
+      "key": "dialTimeoutSec",
+      "type": "int",
+      "label": "Таймаут дозвона до цели (сек)",
+      "default": 5,
+      "min": 1,
+      "max": 60,
+      "description": "Сколько ждать недостижимый адрес через туннель, прежде чем отказать. Успешный дозвон — единицы-сотни мс."
+    },
+    {
+      "key": "dialTimeoutCarrierSec",
+      "type": "int",
+      "label": "Таймаут подъёма носителя (сек)",
+      "default": 15,
+      "min": 3,
+      "max": 60,
+      "description": "Сколько ждать TLS/QUIC-хендшейк с сервером туннеля."
+    }
+  ],
+  "helperBinary": {
+    "android": "libp67helper.so",
+    "desktop": "p67-helper"
+  },
+  "build": {
+    "goDir": "native/penis67",
+    "goPkg": "./cmd/helper",
+    "ldflags": "-checklinkname=0"
+  }
+}

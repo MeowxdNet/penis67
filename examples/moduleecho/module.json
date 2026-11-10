@@ -1,0 +1,106 @@
+{
+  "apiVersion": 1,
+  "schemes": [
+    "echo"
+  ],
+  "name": "Echo",
+  "description": "Минимальный образец модуля: прямой проброс трафика (passthrough). Скелет для своего протокола.",
+  "homepage": "",
+  "updateUrl": "",
+  "version": "1.1.0",
+  "license": "MIT",
+  "handoverMode": "signal",
+  "hostEvents": ["handover", "netlost", "netback", "stall", "dns"],
+  "parallelPing": false,
+  "pingNeedsConsent": true,
+  "socks5": true,
+  "dnsResolver": true,
+  "settings": [
+    {
+      "key": "showDialog",
+      "type": "bool",
+      "label": "Показывать тестовый диалог при коннекте",
+      "default": true,
+      "description": "Демонстрация интерактив-действия (ACTION_REQUIRED) у ссылок с флагом ?action=1. Выкл → и такие ссылки подключаются без диалога; ссылки без флага диалога не показывают никогда."
+    },
+    {
+      "key": "dialogText",
+      "type": "string",
+      "label": "Текст диалога",
+      "default": "Подтвердите подключение echo"
+    },
+    {
+      "key": "autoCloseSec",
+      "type": "int",
+      "label": "Автозакрытие диалога (сек, 0=выкл)",
+      "default": 0,
+      "min": 0,
+      "max": 600
+    },
+    {
+      "key": "dialTimeoutSec",
+      "type": "int",
+      "label": "Таймаут дозвона до цели (сек)",
+      "default": 5,
+      "min": 1,
+      "max": 60,
+      "description": "Сколько ждать недостижимый адрес, прежде чем отказать. Успешный дозвон — единицы-сотни мс; длинный потолок только затягивает заведомый отказ и держит соединение приложения. Поднимайте, если канал реально медленный."
+    },
+    {
+      "key": "demoTypes",
+      "type": "string",
+      "label": "Демо-типы действий (CSV)",
+      "default": "confirm",
+      "description": "§2.8: confirm,form,choice,display,webview — какие типы прогнать подряд при коннекте. Пусто = confirm. Плюс selfpage — escape-hatch: модуль поднимает свой локальный листенер, отдаёт СВОЮ страницу и забирает результат тем же правилом (для AntiNet это обычный webview). Плюс browser — страница проверки модуля через всё окно webview §2.7: прокси модуля, User-Agent, заголовки, cookie до и после (HttpOnly), выход со страницы проверки, «Готово», одноразовый профиль; итог по каждому полю — в журнале модуля."
+    },
+    {
+      "key": "midSessionSec",
+      "type": "int",
+      "label": "Мид-сессионное действие через N сек (0=выкл)",
+      "default": 0,
+      "min": 0,
+      "max": 3600,
+      "description": "§2.8 ось 2: эмитить ACTION_REQUIRED уже ПОСЛЕ готовности, на живом туннеле (протухший токен, step-up, повторная капча). Отмена такого действия сессию не рвёт."
+    },
+    {
+      "key": "richActionMode",
+      "type": "string",
+      "label": "Демо host_action_request (network/navigation, пусто=выкл)",
+      "default": "",
+      "description": "§2.7/§2.12 rich interactive action — пусто=пропущено. 'network' или 'navigation'."
+    },
+    {
+      "key": "richActionUrl",
+      "type": "string",
+      "label": "Стартовая страница webview",
+      "default": ""
+    },
+    {
+      "key": "richActionPattern",
+      "type": "string",
+      "label": "Паттерн (endpoint для network / url для navigation)",
+      "default": ""
+    },
+    {
+      "key": "richActionJsonPath",
+      "type": "string",
+      "label": "JSON-путь извлечения (только network)",
+      "default": ""
+    },
+    {
+      "key": "richActionParam",
+      "type": "string",
+      "label": "Имя параметра извлечения (только navigation)",
+      "default": ""
+    }
+  ],
+  "helperBinary": {
+    "android": "libechohelper.so",
+    "desktop": "echo-helper"
+  },
+  "build": {
+    "goDir": "native/echo",
+    "goPkg": "./cmd/helper",
+    "ldflags": "-checklinkname=0"
+  }
+}
