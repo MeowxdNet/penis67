@@ -132,3 +132,5 @@ multi-carrier, per-conn серты, e2e-туннель TCP+UDP, decoy-relay (п�
   порты, fragmentation) + net4people/bbs #546.
 * FOCI'25 — «Is Custom Congestion Control a Bad Idea for Circumvention
   Tools?» (почему QUIC-носитель на стандартном CC).
+
+## Я официально не принимаю это и точка
